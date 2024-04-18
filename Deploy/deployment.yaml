@@ -17,7 +17,7 @@ resources:
 
 # Instance
 - type: compute.v1.instance
-  name: FormApp
+  name: form-app
   properties:
     zone: us-central1-a
     machineType: https://www.googleapis.com/compute/v1/projects/singular-cache-415315/zones/us-central1-a/machineTypes/e2-small
