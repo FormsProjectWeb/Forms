@@ -1,0 +1,55 @@
+resources:
+# Firewall rule
+- name: app
+  type: compute.v1.firewall
+  properties:
+    network: https://www.googleapis.com/compute/v1/projects/master-vehicle-420613/global/networks/default
+    priority: 1000
+    direction: INGRESS
+    sourceRanges:
+    - 0.0.0.0/0
+    targetTags:
+    - app
+    allowed:
+    - IPProtocol: TCP
+      ports:
+      - 8000
+
+# Instance
+- type: compute.v1.instance
+  name: FormApp
+  properties:
+    zone: us-central1-a
+    machineType: https://www.googleapis.com/compute/v1/projects/master-vehicle-420613/zones/us-central1-a/machineTypes/e2-small
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
+    networkInterfaces:
+    - network: https://www.googleapis.com/compute/v1/projects/master-vehicle-420613/global/networks/default
+      networkIP: 10.128.0.51
+      accessConfigs:
+      - name: External NAT
+        type: ONE_TO_ONE_NAT
+    tags:
+      items: 
+      - app
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/bin/bash
+          sudo apt-get update
+          sudo apt install python3-pip -y
+          sudo mkdir /apps
+          cd /apps
+          sudo git clone https://github.com/FormsProjectWeb/Forms.git
+          cd Form
+          sudo git pull
+          sudo pip3 install -r /Deployment/requirements.txt
+          sudo python3 manage.py makemigrations
+          sudo python3 manage.py migrate
+          nohup python3 manage.py runserver 0.0.0.0:8000 &

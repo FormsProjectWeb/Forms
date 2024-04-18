@@ -1,0 +1,24 @@
+.hidden {
+    border: 0px;
+    color: white;
+    background-color: white;
+}
+
+.hidden img {
+    visibility: hidden;
+}
+
+.button {
+    background-color: lightgrey;
+}
+
+#FastMessage {
+    width: 189px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#messageField {
+    width: 173px;
+}

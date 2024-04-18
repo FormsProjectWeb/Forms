@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<p>{{ answer }}</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <textarea name="question" class="hidden" cols="21" rows="1"></textarea>
+    <input type="submit" value="" class="hidden button">
+</form>
+<br>
+{{ FastMessageAnswer }}
+<form id="FastMessage">
+    <div id="messageField" class="hidden" contenteditable="true"></div>
+    <input type="submit" value="" class="hidden button" autocomplete="off">
+</form>
+{% endblock content %}
