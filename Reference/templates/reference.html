@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<p>Subject: {{ subject }}</p>
+<br>
+<p>Topics: {{ topics }}</p>
+<br>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="flex-column" style="max-width: 30%;">
+        <input type="text" name="subject">
+        <label for="">Subject</label>
+        <br>
+        <textarea name="topics" cols="21" rows="3"></textarea>
+        <label for="">Topics</label>
+        <br>
+    </div>
+    <input type="submit" value="Update">
+</form>
+{% endblock content %}

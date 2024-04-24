@@ -22,3 +22,8 @@
 #messageField {
     width: 173px;
 }
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}

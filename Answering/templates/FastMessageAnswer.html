@@ -1,6 +1,10 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<p>Current: {{ FastMessageAnswer }}</p>
 <form action="" method="post">
     {% csrf_token %}
-    <p>Actual: {{ FastMessageAnswer }}</p>
     <textarea name="question" cols="21" rows="3"></textarea>
-    <input type="submit" value="Enviar">
+    <input type="submit" value="Send">
 </form>
+{% endblock content %}

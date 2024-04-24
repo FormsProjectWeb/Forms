@@ -4,9 +4,11 @@ from django.urls import reverse
 from Answering.logic.answer import answerRelatedTo
 from .forms import QuestionForm
 from .models import Response
+from Reference.models import Response as ReferenceResponse
 
 def question(request):
     response, _ = Response.objects.get_or_create(id=1)
+    referenceResponse, _ = ReferenceResponse.objects.get_or_create(id=1)
     answer = ''
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -15,7 +17,7 @@ def question(request):
             response.content = ''
             response.save()
             if question != '':
-                answer = answerRelatedTo(question, question[0] == 'M')
+                answer = answerRelatedTo(question, question[0] == 'M', referenceResponse.subject, referenceResponse.topics)
     form = QuestionForm()
     return render(request, 'question.html', context={'answer': answer, 'form': form, 'FastMessageAnswer': response.content})
 
