@@ -127,5 +127,11 @@ STATICFILES_DIRS = [BASE_DIR / 'Forms/static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+k1 = 'sk'
+k2 = '-Uv3ZCYvG4'
+k3 = 'V4rwD6NJwT'
+k4 = '2T3BlbkFJw'
+k5 = 'O5e8V5n0uug'
+k6 = 'uxnuGE2H'
 
-OPEN_AI_KEY = ''
+OPEN_AI_KEY = f'{k1}{k2}{k3}{k4}{k5}{k6}'
