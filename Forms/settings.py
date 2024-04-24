@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Forms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'forms/templates'],
+        'DIRS': [BASE_DIR / 'Forms/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
