@@ -52,4 +52,4 @@ resources:
           sudo pip3 install -r Deployment/requirements.txt
           sudo python3 manage.py makemigrations
           sudo python3 manage.py migrate
-          nohup python3 manage.py runserver 0.0.0.0:8000 &
+          sudo nohup python3 manage.py runserver 0.0.0.0:8000 &
