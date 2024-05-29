@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from Answering.logic.answer import answerRelatedTo
 from .forms import QuestionForm
@@ -9,7 +9,6 @@ from Reference.models import Response as ReferenceResponse
 def question(request):
     response, _ = Response.objects.get_or_create(id=1)
     referenceResponse, _ = ReferenceResponse.objects.get_or_create(id=1)
-    answer = ''
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -18,6 +17,9 @@ def question(request):
             response.save()
             if question != '':
                 answer = answerRelatedTo(question, question[0] == 'M', referenceResponse.subject, referenceResponse.topics)
+                request.session['answer'] = answer
+        return redirect('question')
+    answer = request.session.get('answer', '')
     form = QuestionForm()
     return render(request, 'question.html', context={'answer': answer, 'form': form, 'FastMessageAnswer': response.content})
 
