@@ -3,7 +3,7 @@ resources:
 - name: app
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/singular-cache-415315/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceRanges:
@@ -20,7 +20,7 @@ resources:
   name: form-app
   properties:
     zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/msbancoalpes/zones/us-central1-a/machineTypes/e2-micro
+    machineType: https://www.googleapis.com/compute/v1/projects/singular-cache-415315/zones/us-central1-a/machineTypes/e2-micro
     disks:
     - deviceName: boot
       type: PERSISTENT
@@ -29,7 +29,7 @@ resources:
       initializeParams:
         sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/msbancoalpes/global/networks/default
+    - network: https://www.googleapis.com/compute/v1/projects/singular-cache-415315/global/networks/default
       networkIP: 10.128.0.51
       accessConfigs:
       - name: External NAT
@@ -37,3 +37,24 @@ resources:
     tags:
       items: 
       - app
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/bin/bash
+          sudo apt-get update
+          sudo apt-get install git -y
+          sudo apt install python3-pip -y
+          sudo mkdir /apps
+          cd /apps
+          sudo git clone https://github.com/FormsProjectWeb/Forms.git
+          sudo chmod 777 Forms
+          cd Forms
+          sudo git pull
+          sudo pip3 install -r Deployment/requirements.txt
+          sudo python3 manage.py makemigrations
+          sudo python3 manage.py migrate
+          sudo chmod +w db.sqlite3
+          sudo chmod +w .
+          sudo chmod 666 .
+          sudo nohup python3 manage.py runserver 0.0.0.0:8000 &
